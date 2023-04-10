@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+
+
+    {% block content %}
+    <div class="articleForm">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="articleForm-title">
+            {{ form.title.label_tag }}
+            {{ form.title|add_class:"articleForm-title-textBox" }}
+            </div>
+
+            <div class="articleForm-description">
+            {{ form.description.label_tag }}
+            {{ form.description|add_class:"articleForm-description-textBox" }}
+            </div>
+
+            <div class="articleForm-category">
+            {{ form.category.label_tag }}
+            {{ form.category|add_class:"articleForm-category-box" }}
+            </div>
+
+            <div class="articleForm-thumbnail">
+            {{ form.thumbnail.label_tag }}
+            {{ form.thumbnail }}
+            </div>
+
+            <div class="articleForm-status">
+            {{ form.status.label_tag }}
+            {{ form.status }}
+            </div>
+
+            <div class="articleForm-submit">
+                <input type="submit" value="ذخیره"/>        
+            </div>
+            
+        </form>
+    </div>
+
+
+
+            {% for field in form %}
+            <p>
+            {% for error in field.errors %}
+            <p style="color: red">{{ error }}</p>
+            {% endfor %}
+            </p>
+            {% endfor %}
+            {% if form.non_field_errors %}
+            <div style="color: red">
+                <p>{{form.non_field_errors}}</p>
+            </div>
+            {% endif %}
+
+    {% endblock %}

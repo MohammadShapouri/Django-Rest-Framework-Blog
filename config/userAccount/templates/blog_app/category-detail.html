@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+        {% block content %}
+
+        
+        <!-- Page Header-->
+        <header class="masthead" style="background-image: url({% static 'image/homePage-default.jpg' %})">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="site-heading">
+                            <h1>بلاگ جنگو</h1>
+                            <a href="{% url 'EditCategory' category.status category.slug %}"><span class="subheading">{{ category }}</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Main Content-->
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+
+                    {% for categorysArticle in object_list %}
+
+                    <!-- Post preview-->
+                    <div class="post-preview">
+                        <a href="{% url 'ArticleDetail' categorysArticle.slug %}">
+                            <h2 class="post-title">{{ categorysArticle.title }}</h2>
+                            <h3 class="post-subtitle">{{ categorysArticle.description|truncatewords:30 }}</h3>
+                        </a>
+                        <p class="post-meta">
+                            Posted by
+                            <a href="#!">توسط یه نفری</a> <br>
+                            {{ categorysArticle.jalali_publish_date }}
+                        </p>
+                    </div>
+
+                    {% for category in categorysArticle.completed_cateogry %}
+
+                    <div>
+                        <a href="{% url 'viewCategorysArticles' category.slug %}">#{{ category.title }}</a>
+                    </div>
+
+                    {% endfor %}
+
+                    <!-- Divider-->
+                    <hr class="my-4" />
+                   
+                    {% endfor %}
+
+                    <!-- Pager-->
+                    {% if categorysArticles.has_next %}
+                    <div dir="ltr" class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="{% url 'viewCategorysArticles' categorysArticles.next_page_number %}">پست های قدیمی تر</a></div>
+                    {% endif %}
+
+                    {% if categorysArticles.has_previous %}
+                    <div dir="ltr" class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="{% url 'viewCategorysArticles' categorysArticles.previous_page_number %}">پست های جدید تر</a></div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+
+
+
+        {% endblock content %}

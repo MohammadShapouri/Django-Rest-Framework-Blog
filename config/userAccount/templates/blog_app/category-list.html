@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+        {% block content %}
+
+        
+        <!-- Page Header-->
+        <header class="masthead" style="background-image: url({% static 'image/homePage-default.jpg' %})">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="site-heading">
+                            <h1>بلاگ جنگو</h1>
+                            <span class="subheading">بلاگ جنگو</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Main Content-->
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+
+                    {% for category in object_list %}
+
+                        {% if category.parent == None %}
+                            <!-- Category preview-->
+
+                            <div class="post-preview">
+                                <a href="{% url 'CategoryDetail' category.status category.slug %}">
+                                    <h2 class="post-title">{{ category.title }}</h2>
+                                </a>
+                            </div>
+                                {% if category.child.all %}
+
+                                    {% include 'blog/partials/subcategories.html' %}
+
+                                {% endif %}
+
+                        {% endif %}
+
+                        <!-- <div class="post-preview">
+                            <a href="{ It was link of article }">
+                                <h2 class="post-title">{ It was article's name.  }</h2>
+                                <h3 class="post-subtitle">{ It was article's description. }</h3>
+                            </a>
+                            <p class="post-meta">
+                                Posted by
+                                <a href="#!">Start Bootstrap</a> <br>
+                                {{ article.jalali_publish_date }}
+                            </p>
+                        </div> -->
+                        <!-- Divider-->
+                        <hr class="my-4" />
+                    
+                    {% endfor %}
+
+                    <!-- Pager-->
+                    <div dir="ltr" class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="#!">پست های قدیمی تر</a></div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        {% endblock content %}
